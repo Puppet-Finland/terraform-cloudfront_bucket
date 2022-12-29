@@ -18,6 +18,7 @@ resource "aws_cloudfront_distribution" "default" {
   aliases         = [var.name]
   is_ipv6_enabled = true
   price_class     = "PriceClass_100"
+  tags            = var.tags
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
