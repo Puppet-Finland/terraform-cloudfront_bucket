@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "default" {
 
 resource "aws_s3_bucket_acl" "default" {
   bucket = aws_s3_bucket.default.id
-  acl    = "private"
+  acl    = var.bucket_canned_acl
 }
 
 resource "aws_s3_bucket_versioning" "default" {
