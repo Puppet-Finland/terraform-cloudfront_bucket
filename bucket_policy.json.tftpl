@@ -12,7 +12,7 @@
 			"Resource": "${bucket_arn}/*",
 			"Condition": {
 				"StringEquals": {
-					"AWS:SourceArn": "${source_arn}"
+					"AWS:SourceArn": "*"
 				}
 			}
 		}
