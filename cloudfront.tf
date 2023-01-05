@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "default" {
   default_root_object = "index.html"
   enabled         = true
   comment         = "Console assets"
-  aliases         = [var.name]
+  aliases         = concat([var.name], var.aliases)
   is_ipv6_enabled = true
   price_class     = "PriceClass_100"
   tags            = var.tags
