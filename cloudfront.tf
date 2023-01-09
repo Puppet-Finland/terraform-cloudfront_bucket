@@ -26,7 +26,7 @@ resource "aws_cloudfront_distribution" "default" {
     cache_policy_id        = var.cloudfront_cached_policy_managed_optimized_id
     target_origin_id       = aws_s3_bucket.default.bucket_regional_domain_name
     compress               = true
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = var.viewer_protocol_policy
   }
 
   restrictions {

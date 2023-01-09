@@ -18,6 +18,7 @@ The module takes the following parameters:
 * *aliases*: a list of additional aliases for the Cloudfront distribution
 * *bucket_canned_acl*: the "canned ACL" for the bucket. Defaults to "private". Can be one of private, public-read, public-read-write, aws-exec-read or authenticated-read. Normally you should not modify this parameter.
 * *tags*: tags to apply to the resources (Cloudfront distribution and S3 bucket)
+* *viewer_protocol_policy*: possible values are *allow-all*, *https-only*,  *redirect-to-https*
 
 ## SSL certificates
 
