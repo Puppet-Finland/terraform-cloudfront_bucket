@@ -40,4 +40,8 @@ resource "aws_cloudfront_distribution" "default" {
     minimum_protocol_version = "TLSv1.2_2021"
     ssl_support_method       = "sni-only"
   }
+
+  lifecycle {
+    ignore_changes = local.lifecycle_ignore_changes
+  }
 }

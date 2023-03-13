@@ -13,6 +13,11 @@ variable "bucket_canned_acl" {
   }
 }
 
+variable "lifecycle_ignore_changes" {
+  type    = list(string)
+  default = []
+}
+
 variable "name" {
   type = string
 }
