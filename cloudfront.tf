@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   lifecycle {
-    ignore_changes = []
+    ignore_changes = [aliases]
   }
 }
 
