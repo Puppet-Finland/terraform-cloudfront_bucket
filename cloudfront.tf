@@ -1,7 +1,8 @@
 data "aws_acm_certificate" "default" {
-  provider = aws.us-east-1
-  domain   = var.name
-  statuses = ["ISSUED"]
+  provider    = aws.us-east-1
+  domain      = var.name
+  statuses    = ["ISSUED"]
+  most_recent = true
 }
 
 resource "aws_cloudfront_distribution" "default" {
