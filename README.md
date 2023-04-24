@@ -4,9 +4,9 @@ Create a SSL/TLS-enabled Cloudfront distribution and its origin S3 bucket in
 one go. The SSL certificate is obtained from us-east-1 using a data source and
 not managed by this module.
 
-This module sets up an S3 bucket policy that allows the Cloudfront distribution
-to read bucket contents. This allows Cloudfront to work normally even when ACLs
-for the bucket *objects* would otherwise prevent it from doing so.
+This module sets up an S3 bucket policy and a matching origin access control in
+the Cloudfront distribution.  This means that Cloudfront distribution is able
+to read S3 bucket contents without depending on deprecated S3 bucket ACLs.
 
 # Usage
 
@@ -30,7 +30,7 @@ Here's a sample of how to call the module:
 
 ```
 module "firmware_cloudfront" {
-  source = "github.com/Puppet-Finland/terraform-cloudfront_bucket?ref=1.0.0"
+  source = "github.com/Puppet-Finland/terraform-cloudfront_bucket?ref=2.0.0"
   name   = "files.example.org"
   tags   = { "Role": "File distribution" }
 }
