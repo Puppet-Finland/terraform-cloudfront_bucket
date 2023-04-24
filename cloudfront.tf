@@ -7,10 +7,11 @@ data "aws_acm_certificate" "default" {
 
 resource "aws_cloudfront_distribution" "default" {
   origin {
-    domain_name         = aws_s3_bucket.default.bucket_regional_domain_name
-    origin_id           = aws_s3_bucket.default.bucket_regional_domain_name
-    connection_attempts = 3
-    connection_timeout  = 10
+    domain_name              = aws_s3_bucket.default.bucket_regional_domain_name
+    origin_id                = aws_s3_bucket.default.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    connection_attempts      = 3
+    connection_timeout       = 10
   }
 
   default_root_object = "index.html"
@@ -45,4 +46,12 @@ resource "aws_cloudfront_distribution" "default" {
   lifecycle {
     ignore_changes = []
   }
+}
+
+resource "aws_cloudfront_origin_access_control" "default" {
+  name                              = var.name
+  description                       = "Allow access to ${var.name}-managed S3 bucket"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }
