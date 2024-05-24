@@ -7,6 +7,12 @@ variable "name" {
   type = string
 }
 
+variable "manage_bucket_policy" {
+  type        = bool
+  default     = true
+  description = "Whether to manage the S3 bucket policy or not"
+}
+
 variable "tags" {
   type    = map
   default = {}
