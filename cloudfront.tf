@@ -55,3 +55,14 @@ resource "aws_cloudfront_origin_access_control" "default" {
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
+
+resource "aws_cloudfront_response_headers_policy" "strict-origin-when-cross-origin" {
+  name = "strict-origin-when-cross-origin"
+
+  security_headers_config {
+    referrer_policy {
+         override        = true
+         referrer_policy = "strict-origin-when-cross-origin"
+    }
+  }
+}
