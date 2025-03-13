@@ -15,6 +15,13 @@
           "AWS:SourceArn": "${source_arn}"
         }
       }
+    },
+    {
+      "Sid": "PublicRead",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "${bucket_arn}/.well-known/acme-challenge/*"
     }
   ]
 }
