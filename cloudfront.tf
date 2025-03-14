@@ -2,6 +2,7 @@ data "aws_acm_certificate" "default" {
   provider    = aws.us-east-1
   domain      = var.name
   statuses    = ["ISSUED"]
+  key_types   = ["RSA_2048", "EC_prime256v1"]
   most_recent = true
 }
 
