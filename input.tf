@@ -27,3 +27,18 @@ variable "viewer_protocol_policy" {
     error_message = "ERROR: Invalid viewer protocol policy!"
   }
 }
+
+variable "ordered_cache_behaviors" {
+    type = list(object({
+        allowed_methods        = list(string)
+        target_origin_id       = string
+        cached_methods         = list(string)
+        viewer_protocol_policy = string
+        path_pattern           = string
+
+        forwarded_values = optional(object({
+          headers = optional(list(string), [])
+        }), {})
+      }))
+  default = null
+}

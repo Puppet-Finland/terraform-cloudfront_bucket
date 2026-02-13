@@ -15,6 +15,29 @@ resource "aws_cloudfront_distribution" "default" {
     connection_timeout       = 10
   }
 
+  dynamic ordered_cache_behavior {
+    for_each = var.ordered_cache_behaviors == null ? [] : [var.ordered_cache_behaviors]
+    iterator = ocb
+
+    content {
+      allowed_methods        = ocb.value.allowed_methods
+      target_origin_id       = ocb.value.target_origin_id
+      path_pattern           = ocb.value.path_pattern
+      cached_methods         = ocb.value.cached_methods
+      viewer_protocol_policy = ocb.value.viewer_protocol_policy
+ 
+      forwarded_values {
+        headers = try(ocb.value.forwarded_values.headers, [])
+        query_string = ocb.value.forwarded_values.query_string
+
+        cookies {
+          forward = ocb.value.forwarded_values.cookies.forward
+          whitelisted_names = ocb.value.forwarded_values.cookies.whitelisted_names
+        }
+      }
+    }
+  }
+
   default_root_object = "index.html"
   enabled         = true
   comment         = "Console assets"
