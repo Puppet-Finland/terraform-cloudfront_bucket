@@ -6,6 +6,14 @@ data "aws_acm_certificate" "default" {
   most_recent = true
 }
 
+data "aws_cloudfront_cache_policy" "default" {
+  name = "Managed-CachingDisabled"
+}
+
+data "aws_cloudfront_origin_request_policy" "default" {
+  name = "Managed-AllViewerExceptHostHeader"
+}
+
 resource "aws_cloudfront_distribution" "default" {
   origin {
     domain_name              = aws_s3_bucket.default.bucket_regional_domain_name
@@ -13,6 +21,56 @@ resource "aws_cloudfront_distribution" "default" {
     origin_access_control_id = aws_cloudfront_origin_access_control.default.id
     connection_attempts      = 3
     connection_timeout       = 10
+  }
+
+  dynamic "origin" {
+    for_each = var.reverse_proxy_origin != null ? [1] : []
+
+    content {
+      connection_attempts = 3
+      connection_timeout  = 10
+      domain_name         = var.reverse_proxy_origin
+      origin_id           = var.reverse_proxy_origin
+
+      custom_origin_config {
+          http_port                = 80
+          https_port               = 443
+          origin_keepalive_timeout = 5
+          origin_protocol_policy   = "https-only"
+          origin_read_timeout      = 30
+          origin_ssl_protocols     = [
+            "TLSv1.2",
+          ]
+      }
+    }
+  }
+
+  dynamic "ordered_cache_behavior" {
+    for_each = var.reverse_proxy_origin != null ? [1] : []
+
+    content {
+      allowed_methods        = [
+          "DELETE",
+          "GET",
+          "HEAD",
+          "OPTIONS",
+          "PATCH",
+          "POST",
+          "PUT",
+        ]
+      cached_methods         = [
+          "GET",
+          "HEAD",
+        ]
+      compress               = true
+      path_pattern           = "/v2/*"
+      smooth_streaming       = false
+      target_origin_id       = var.reverse_proxy_origin
+      viewer_protocol_policy = "redirect-to-https"
+      cache_policy_id            = data.aws_cloudfront_cache_policy.default.id
+      origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.default.id
+
+    }
   }
 
   default_root_object = "index.html"

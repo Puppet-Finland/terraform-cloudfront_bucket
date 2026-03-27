@@ -27,3 +27,7 @@ variable "viewer_protocol_policy" {
     error_message = "ERROR: Invalid viewer protocol policy!"
   }
 }
+
+variable "reverse_proxy_origin" {
+  type = string
+}
