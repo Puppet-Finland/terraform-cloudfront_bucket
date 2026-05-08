@@ -18,6 +18,7 @@ The module takes the following parameters:
 * *aliases*: a list of additional aliases for the Cloudfront distribution
 * *tags*: tags to apply to the resources (Cloudfront distribution and S3 bucket)
 * *viewer_protocol_policy*: possible values are *allow-all*, *https-only*,  *redirect-to-https*
+* *cloudfront_response_headers_policy_id*: the id of policy
 
 ## SSL certificates
 
