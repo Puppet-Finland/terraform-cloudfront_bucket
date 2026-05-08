@@ -69,9 +69,10 @@ resource "aws_cloudfront_distribution" "default" {
       viewer_protocol_policy = "redirect-to-https"
       cache_policy_id            = data.aws_cloudfront_cache_policy.default.id
       origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.default.id
-
+      response_headers_policy_id  = var.cloudfront_response_headers_policy_id
     }
   }
+
 
   default_root_object = "index.html"
   enabled         = true

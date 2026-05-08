@@ -31,3 +31,7 @@ variable "viewer_protocol_policy" {
 variable "reverse_proxy_origin" {
   type = string
 }
+
+ variable "cloudfront_response_headers_policy_id" {
+  type = string
+ }
